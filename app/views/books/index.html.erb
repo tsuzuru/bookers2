@@ -41,11 +41,11 @@
 <div class="col-md-8 offset-md-1">
 
   <h2>Books</h2>
-  
+
 <table class="table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th></th>
       <th>Title</th>
       <th>Opinion</th>
     </tr>
@@ -56,6 +56,21 @@
       <td><%= link_to attachment_image_tag(@user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg"), user_path(book.id) %></td>
       <td><%= link_to book.title, book_path(book)%></td>
       <td><%= book.body %></td>
+      <td>
+        <% if book.favorited_by?(current_user) %>
+      <td>
+        <%= link_to book_favorites_path(book), method: :delete do %>
+          ♥<%= book.favorites.count %>
+        <% end %>
+      </td>
+        <% else %>
+      <td>
+        <%= link_to book_favorites_path(book), method: :post do %>
+          ♡<%= book.favorites.count %>
+        <% end %>
+      </td>
+      <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>
