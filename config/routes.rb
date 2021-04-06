@@ -9,7 +9,13 @@ Rails.application.routes.draw do
   root to: "homes#top"
   get "home/about" => 'homes#about'
 
-  resources :users
+  resources :users do
+# ——————————————— ここから ———————————————
+    resource :relationships, only: [:create, :destroy]
+    get 'followings' => 'relationships#followings', as: 'followings'
+    get 'followers' => 'relationships#followers', as: 'followers'
+# ——————————— ここまでネストさせる ———————————
+  end
 
   resources :books do
     resource :favorites,only:[:create,:destroy]
